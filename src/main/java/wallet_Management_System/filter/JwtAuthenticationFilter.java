@@ -30,20 +30,20 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             HttpServletRequest request,
             HttpServletResponse response,
             FilterChain filterChain) throws ServletException, IOException {
-        System.out.println("JWT FILTER EXECUTED");
+
         String authHeader = request.getHeader("Authorization");
         if(authHeader==null || !authHeader.startsWith("Bearer ")){
             filterChain.doFilter(request,response);
             return;
         }
 
-        System.out.println("passed with bearer");
+
         String token = authHeader.substring(7);
         String phoneNumber = jwtUtil.extractPhoneNumber(token);
-        System.out.println(phoneNumber);
+
         boolean isValid = jwtUtil.isTokenValid(token,phoneNumber);
         if(!isValid){
-            System.out.println("invalid token");
+
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             return;
         }
@@ -55,12 +55,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                         Collections.emptyList()
                 );
         SecurityContextHolder.getContext().setAuthentication(authentication);
-        System.out.println(
-                SecurityContextHolder.getContext()
-                        .getAuthentication()
-                        .isAuthenticated()
-        );
-        System.out.println("holder got the phoneNumber");
+
 
         filterChain.doFilter(request,response);
     }

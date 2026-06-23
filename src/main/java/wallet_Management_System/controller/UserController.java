@@ -39,7 +39,7 @@ public class UserController {
 
     @GetMapping("/dashboard")
     public DashboardResponse dashboard(){
-        System.out.println("inside the dashboard controller");
+
         Authentication authentication =
                 SecurityContextHolder.getContext().getAuthentication();
         return dashboardService.dashboard(authentication.getName());

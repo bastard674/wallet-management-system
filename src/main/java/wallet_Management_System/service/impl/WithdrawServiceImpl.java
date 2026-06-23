@@ -51,9 +51,10 @@ public class WithdrawServiceImpl implements WithdrawService {
         //updating the balance
         BigDecimal balance = wallet.getBalance();
         BigDecimal updatedBalance = balance.subtract(amount);
-        System.out.println("updatedBalance :" + updatedBalance);
+
         //saving the balance
         wallet.setBalance(updatedBalance);
+
         walletRepository.save(wallet);
 
         //add the transaction records
